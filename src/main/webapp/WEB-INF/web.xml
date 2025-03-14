@@ -10,25 +10,25 @@
   </welcome-file-list>
 
   <!-- Database Configuration -->
-  <context-param>
+<context-param>
     <param-name>driver</param-name>
     <param-value>com.mysql.cj.jdbc.Driver</param-value>
-  </context-param>
+</context-param>
 
-  <context-param>
+<context-param>
     <param-name>url</param-name>
-    <param-value>jdbc:mysql://mysql.railway.internal:3306/railway</param-value>
-  </context-param>
+    <param-value>jdbc:mysql://crossover.proxy.rlwy.net:56585/railway?useSSL=false</param-value>
+</context-param>
 
-  <context-param>
+ <context-param>
     <param-name>username</param-name>
     <param-value>root</param-value>
-  </context-param>
+</context-param>
 
-  <context-param>
+ <context-param>
     <param-name>password</param-name>
     <param-value>PdYuZqDYYdqzBnBlQKFtwnrrEMPEBZwU</param-value>
-  </context-param>
+</context-param>
 
 <servlet>
     <servlet-name>auth</servlet-name>
