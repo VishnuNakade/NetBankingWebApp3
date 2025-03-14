@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan & Pay</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 50px;
+            margin-right: 10px;
+            color: #f1c40f;
+        }
+
+        /* Navigation */
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f1c40f;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #qrcode, #reader {
+            margin: 20px auto;
+        }
+        #qrcode {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+#reader button {
+    margin-top: 20px !important;
+}
+
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+        <script src="https://kit.fontawesome.com/cd72be3143.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-landmark"></i>
+            <h1>Banker</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Scan & Pay</h2>
+        
+        <!-- QR Code Generation -->
+        <h3>Pay Using QR Code</h3>
+        <div id="qrcode"></div>
+        <button onclick="generateQRCode()">Generate QR Code</button>
+
+        <hr>
+
+        <!-- QR Code Scanner -->
+        <h3>Scan QR Code</h3>
+        <div id="reader"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Banker. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to generate QR code
+        function generateQRCode() {
+            let paymentLink = "upi://pay?pa=yourUPIID@upi&pn=YourName&mc=&tid=&tr=&tn=BillPayment&am=100&cu=INR";
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), {
+                text: paymentLink,
+                width: 200,
+                height: 200
+            });
+        }
+
+        // Function to handle QR Code scanning
+        function onScanSuccess(decodedText) {
+            console.log("Scanned result: " + decodedText);
+            window.location.href = decodedText; // Redirect to payment URL
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+    </script>
+
+</body>
+</html>
