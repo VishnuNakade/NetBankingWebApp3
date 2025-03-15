@@ -5,7 +5,7 @@
               type="javax.sql.DataSource"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
               driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://crossover.proxy.rlwy.net:56585/railway?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;autoReconnect=true&amp;serverTimezone=UTC"
+              url="jdbc:mysql://crossover.proxy.rlwy.net:3306/railway?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;autoReconnect=true&amp;serverTimezone=UTC"
               username="root"
               password="PdYuZqDYYdqzBnBlQKFtwnrrEMPEBZwU"
               maxTotal="20"
