@@ -5,7 +5,7 @@ FROM tomcat:9.0
 WORKDIR /usr/local/tomcat/webapps/
 
 # Copy the WAR file from the build directory to Tomcat webapps
-COPY build/ROOT.war ./ROOT.war
+COPY build/NetBankingWebApp3.war ./NetBankingWebApp3.war
 
 # Expose Tomcat’s default port
 EXPOSE 8080
