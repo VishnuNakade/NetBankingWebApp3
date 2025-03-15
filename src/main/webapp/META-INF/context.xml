@@ -5,11 +5,12 @@
               type="javax.sql.DataSource"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
               driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://crossover.proxy.rlwy.net:3306/railway?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;autoReconnect=true&amp;serverTimezone=UTC"
-              username="root"
-              password="PdYuZqDYYdqzBnBlQKFtwnrrEMPEBZwU"
+              url="jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;autoReconnect=true&amp;serverTimezone=UTC"
+              username="${DB_USER}"
+              password="${DB_PASS}"
               maxTotal="20"
               maxIdle="5"
               minIdle="2"
               maxWaitMillis="10000"/>
 </Context>
+
