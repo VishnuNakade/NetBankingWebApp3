@@ -11,36 +11,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 //@WebServlet("/AuthServlet")
 public class LoginSignupServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Connection con;
+    private DataSource dataSource;
 
     public void init() {
         try {
-            System.out.println("🚀 init() method started...");
-
-            String driver = getServletContext().getInitParameter("driver");
-            String url = getServletContext().getInitParameter("url");
-            String username = getServletContext().getInitParameter("username");
-            String password = getServletContext().getInitParameter("password");
-
-            System.out.println("🔍 Loading Driver: " + driver);
-            System.out.println("🔗 Database URL: " + url);
-            System.out.println("👤 Username: " + username);
-
-            // Load MySQL Driver
-            Class.forName(driver);
-
-            // Establish Connection
-            con = DriverManager.getConnection(url, username, password);
-            System.out.println("✅ Database connected successfully!");
-
-        } catch (Exception e) {
-            System.err.println("❌ Database connection failed: " + e.getMessage());
-            e.printStackTrace();
+            Context ctx = new InitialContext();
+            dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/MyDB");
+            System.out.println("✅ Database connection initialized using JNDI.");
+        } catch (NamingException e) {
+            throw new RuntimeException("❌ Failed to initialize database connection: " + e.getMessage(), e);
         }
+    }
+
+    private Connection getConnection() throws SQLException {
+        System.out.println("🔄 Fetching a new connection from the pool...");
+        return dataSource.getConnection();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -140,25 +134,6 @@ public class LoginSignupServlet extends HttpServlet {
     }
 
 
-    private Connection getConnection() throws SQLException {
-        if (con == null || con.isClosed()) {  // Check if the connection is null or closed
-            System.out.println("⚠️ Connection was closed. Reconnecting...");
-            
-            try {
-                String driver = getServletContext().getInitParameter("driver");
-                String url = getServletContext().getInitParameter("url");
-                String username = getServletContext().getInitParameter("username");
-                String password = getServletContext().getInitParameter("password");
 
-                Class.forName(driver);
-                con = DriverManager.getConnection(url, username, password);
-                System.out.println("✅ Reconnected to database.");
-            } catch (Exception e) {
-                System.err.println("❌ Database reconnection failed: " + e.getMessage());
-                throw new SQLException("Database reconnection failed", e);
-            }
-        }
-        return con;
-    }
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+    <Resource name="jdbc/MyDB"
+              auth="Container"
+              type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://crossover.proxy.rlwy.net:56585/railway?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;autoReconnect=true&amp;serverTimezone=UTC"
+              username="root"
+              password="PdYuZqDYYdqzBnBlQKFtwnrrEMPEBZwU"
+              maxTotal="20"
+              maxIdle="5"
+              minIdle="2"
+              maxWaitMillis="10000"/>
+</Context>
+
+
