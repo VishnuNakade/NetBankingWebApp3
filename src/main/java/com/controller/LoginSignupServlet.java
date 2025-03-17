@@ -107,7 +107,9 @@ public class LoginSignupServlet extends HttpServlet {
 
     private boolean validateUser(String username, String password) {
         String query = "SELECT * FROM login WHERE username = ? AND password = ?";
-        try (Connection conn = getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();  // Create a new connection
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
             pst.setString(1, username);
             pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
@@ -118,9 +120,12 @@ public class LoginSignupServlet extends HttpServlet {
         }
     }
 
+
     private int insertUser(int id, String username, String password, String securityQuestion, String securityAnswer) {
         String query = "INSERT INTO login (id, username, password, security_question, security_answer) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();  // Create a new connection
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
             pst.setInt(1, id);
             pst.setString(2, username);
             pst.setString(3, password);
@@ -134,10 +139,26 @@ public class LoginSignupServlet extends HttpServlet {
         }
     }
 
+
     private Connection getConnection() throws SQLException {
-        if (con == null) {
-            throw new SQLException("❌ Connection is null. Check init() method.");
+        if (con == null || con.isClosed()) {  // Check if the connection is null or closed
+            System.out.println("⚠️ Connection was closed. Reconnecting...");
+            
+            try {
+                String driver = getServletContext().getInitParameter("driver");
+                String url = getServletContext().getInitParameter("url");
+                String username = getServletContext().getInitParameter("username");
+                String password = getServletContext().getInitParameter("password");
+
+                Class.forName(driver);
+                con = DriverManager.getConnection(url, username, password);
+                System.out.println("✅ Reconnected to database.");
+            } catch (Exception e) {
+                System.err.println("❌ Database reconnection failed: " + e.getMessage());
+                throw new SQLException("Database reconnection failed", e);
+            }
         }
         return con;
     }
+
 }
